@@ -1,0 +1,20 @@
+message CMsgClientGamePlayed {
+        optional uint64 steam_id_gs = 1;
+        optional fixed64 game_id = 2;
+        optional uint32 game_ip_address = 3;
+        optional uint32 game_port = 4;
+        optional bool is_secure = 5;
+        optional bytes token = 6;
+        optional string game_extra_info = 7;
+        optional bytes game_data_blob = 8;
+        optional uint32 process_id = 9;
+        optional uint32 streaming_provider_id = 10;
+        optional uint32 game_flags = 11;
+        optional uint32 owner_id = 12;
+		repeated string names = 13;
+}
+
+message CMsgClientGamesPlayed {
+	repeated CMsgClientGamePlayed games_played = 1;
+	optional uint32 client_os_type = 2;
+}

@@ -1,7 +1,5 @@
 import re
 
-""" Crude Classes """
-
 TOKEN_MESSAGE = 1
 TOKEN_LBRACKET = 3
 TOKEN_RBRACKET = 4
@@ -26,6 +24,9 @@ regexes = [(TOKEN_LSBRACKET, "\["),
            (TOKEN_VALUE, "[\"'a-zA-Z0-9\.\-_]+"),
            (TOKEN_WHITESPACE, "[ \t]+"),
            (TOKEN_NEWLINE, "(\n|\r\n)")]
+
+#TODO: turn this into a few classes,
+#        get rid of the horrible globals
 
 tokens = None
 token = None
@@ -224,30 +225,24 @@ class Enum:
     def __repr__(self):
         return "<Enum: %s: %s>" % (self.name, self.properties)
 
-if __name__ == "__main__":
-    proto = """
-message CMsgClientGamePlayed {
-        optional uint64 steam_id_gs = 1;
-        optional fixed64 game_id = 2;
-        optional uint32 game_ip_address = 3;
-        optional uint32 game_port = 4;
-        optional bool is_secure = 5;
-        optional bytes token = 6;
-        optional string game_extra_info = 7;
-        optional bytes game_data_blob = 8;
-        optional uint32 process_id = 9;
-        optional uint32 streaming_provider_id = 10;
-        optional uint32 game_flags = 11;
-        optional uint32 owner_id = 12;
-}
+def main():
+    global tokens
+    
+    import sys
 
-message CMsgClientGamesPlayed {
-	repeated CMsgClientGamePlayed games_played = 1;
-	optional uint32 client_os_type = 2;
-}
-    """
+    if len(sys.argv) > 1 and sys.argv[1].startswith("-h"):
+        print "usage: %s < myprotobufs.proto > myprotobufs.py" % sys.argv[0]
+        return
 
+    proto = sys.stdin.read()
     tokens = tokenize(proto)
+
+    print "from protobuf_utils import *"
+    print
+    
     res = parse_blocks()
     for b in res:
         print b.to_code()
+
+if __name__ == "__main__":
+    main()
