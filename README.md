@@ -23,7 +23,8 @@ from exampleprotos import *
 '\x11\xd2\x04\x00\x00\x00\x00\x00\x002\x14TOKENTOKENTOKENTOKENj\x03catj\x03dogj\x04fish'
 
 # decoding
->>> msg = message_CMsgClientGamePlayed(encoded)
+>>> msg = message_CMsgClientGamePlayed()
+>>> msg.decode(encoded)
 >>> print msg.game_id
 1234
 >>> print msg.names
