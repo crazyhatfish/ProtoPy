@@ -6,29 +6,35 @@ this isn't anywhere near a good implementation (actually not complete either) of
 ## Example usage
 First, compile the Protobufs to Python with the `protobuf_compile.py` script.
 ```
-python protobuf_compile.py < exampleprotos.proto > exampleprotos.py
+python protobuf_compile.py < exampleproto.proto > exampleproto.py
 ```
 Then the Protobufs can be used as follows:
 ```python
-from exampleprotos import *
+from exampleproto import *
 
 # encoding
->>> msg = message_CMsgClientGamePlayed()
->>> msg.game_id = 1234
->>> msg.names = ["cat", "dog", "fish"]
+>>> game = CMsgClientGamesPlayed.Game()
+>>> game.game_id = 1234
+>>> game.game_name = "blah"
+>>> game.game_version = EGameVersion.k_EGameVersionNone
+
+>>> msg = CMsgClientGamesPlayed()
+>>> msg.game_ip_address = 0x11223344
+>>> msg.game_port = 1337
+>>> msg.games = [game]
 >>> msg.token = "TOKENTOKENTOKENTOKEN"
 
 >>> encoded = msg.encode()
 >>> encoded
-'\x11\xd2\x04\x00\x00\x00\x00\x00\x002\x14TOKENTOKENTOKENTOKENj\x03catj\x03dogj\x04fish'
+'\x10\xc4\xe6\x88\x89\x01\x18\xb9\n*\x14TOKENTOKENTOKENTOKENR\x11\t\xd2\x04\x00\x00\x00\x00\x00\x00\x12\x04blah(\x00'
 
 # decoding
->>> msg = message_CMsgClientGamePlayed()
+>>> msg = message_CMsgClientGamesPlayed()
 >>> msg.decode(encoded)
->>> print msg.game_id
-1234
->>> print msg.names
-["cat", "dog", "fish"]
->>> print msg.token
+>>> msg.games
+[<exampleproto.Game instance at 0xXXXXXXXX>]
+>>> msg.games[0].game_name
+"blah"
+>>> msg.token
 "TOKENTOKENTOKENTOKEN"
 ```
