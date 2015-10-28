@@ -29,7 +29,7 @@ from exampleproto import *
 '\x10\xc4\xe6\x88\x89\x01\x18\xb9\n*\x14TOKENTOKENTOKENTOKENR\x11\t\xd2\x04\x00\x00\x00\x00\x00\x00\x12\x04blah(\x00'
 
 # decoding
->>> msg = message_CMsgClientGamesPlayed()
+>>> msg = CMsgClientGamesPlayed()
 >>> msg.decode(encoded)
 >>> msg.games
 [<exampleproto.Game instance at 0xXXXXXXXX>]
