@@ -32,9 +32,11 @@ from exampleproto import *
 >>> msg = CMsgClientGamesPlayed()
 >>> msg.decode(encoded)
 >>> msg.games
-[<exampleproto.Game instance at 0xXXXXXXXX>]
+[{'game_id': 1234L, 'game_name': 'blah', 'game_version': 0L}]
 >>> msg.games[0].game_name
-"blah"
+'blah'
 >>> msg.token
-"TOKENTOKENTOKENTOKEN"
+'TOKENTOKENTOKENTOKEN'
+>>> msg.to_dict()
+{'game_port': 1337, 'token': 'TOKENTOKENTOKENTOKEN', 'game_ip_address': 287454020, 'games': [{'game_id': 1234, 'game_name': 'blah', 'game_version': 0}]}
 ```

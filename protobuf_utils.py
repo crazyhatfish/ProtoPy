@@ -407,6 +407,15 @@ class Message:
 
         return buf.getvalue()
 
+    def to_dict(self):
+        # dict-ify
+        res = dict(self.__dict__)
+        del res["__lookup__"]
+        return res
+
+    def __repr__(self):
+        return str(self.to_dict())
+
 def debug_binary_protobuf(data, depth=1):
     s = StringIO(data)
     length = len(data)
